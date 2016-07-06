@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<!-- start right frame -->
+<head>
+    <title>Student XClass Page</title>
+    ~[wc:commonscripts]
+    <link href="/images/css/screen.css" rel="stylesheet" media="screen">
+    <link href="/images/css/print.css" rel="stylesheet" media="print">
+    <script> 
+	  var ccRecords = [{teacherName:"Sue", courseName:"Math", experience:0, stuClass:"scholar"}];
+   	  function displayXavierStudent() {
+	    $j('#xavierStudent').empty();
+	   
+	    $j('#xavierStudent').append(
+	      '<table id="xavierTable" class="grid"><thead></thead><tbody id="xavierTableBody"></tbody></table>'
+	    );
+		
+		for(var i=0; i < ccRecords.length; i++){
+		  $j('#xavierTableBody').append(
+		  '<tr><td>' + ccRecords[i].teacherName + '</td><td>' + ccRecords[i].courseName + '</td>'+
+		    '<td>' + ccRecords[i].experience + '</td><td>' + ccRecords.stuClass + '</td>'
+		   );
+		}
+	  }
+		
+	  $j(document).ready(function() {
+	  
+        displayXavierStudent();  
+      });
+	</script>
+    <style>
+      </style>
+</head>
+<body>
+~[wc:admin_header_frame_css]
+<!-- breadcrumb start --><a href="/admin/home.html" target="_top">~[text:psx.html.admin_students.honorroll.start_page]</a>
+&gt; <a href="home.html?selectstudent=nosearch" target="_top">~[text:psx.html.admin_students.honorroll.student_selection]</a>
+&gt;~[text:psx.html.admin_students.honorroll.honor_roll1]
+<!-- breadcrumb end -->~[wc:admin_navigation_frame_css] ~[wc:title_student_begin_css]Student Xavierr~[wc:title_student_end_css]
+<div id="Error" name=Error" style="border-color: red;"></div>
+<div id="xavierStudent">
+	<table class ="grid" ><th> DOES THIS WORK </th> </table>
+	</div>
+<div name="anotherDiv"></div>
+<!-- end of content of bounding box -->
+~[wc:admin_footer_frame_css]
+</body>
+</html>
