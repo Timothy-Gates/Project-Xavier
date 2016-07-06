@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://plugin.powerschool.pearson.com"
+		xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+		xsi:schemaLocation='http://plugin.powerschool.pearson.com plugin.xsd'
+		name="Xavier"
+		version="1.0"
+		description="Gamification of the Student Portal">
+
+	<publisher name="Timothy Gates, Jason Wilson, Wayne Robinson">
+		<contact email="timothy.gates@powerschool.com" />
+	</publisher>
+
+</plugin>
