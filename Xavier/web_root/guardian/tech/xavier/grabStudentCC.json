@@ -1,17 +1,19 @@
 [
   ~[tlist_sql;
-SELECT a.id, b.xavier_experience, b.xavier_class, c.lastfirst, d.course_name
+SELECT a.id, a.dcid, b.ccdcid, b.xavier_experience, b.xavier_class, c.lastfirst, d.course_name
 FROM ps.cc a
-LEFT JOIN ps.cc.u_def_ext_cc b
+LEFT JOIN ps.u_def_ext_cc b
 ON a.dcid = b.ccdcid
 LEFT JOIN ps.teachers c
 ON a.teacherid = c.id
 LEFT JOIN ps.courses d
 ON a.course_number = d.course_number
-WHERE studentid=~(curstudid)
+WHERE studentid=32
 ]
 {
  "ccid": "~(a.id)",
+ "dcid": "~(a.dcid)",
+ "ccdcid": "~(b.ccdcid)",
  "experience" : "~(b.xavier_experience)",
  "stuClass": "~(b.xavier_class)",
  "teacherName": "~(b.lastfirst)",

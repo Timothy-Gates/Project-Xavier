@@ -23,15 +23,17 @@
 			    var current = 0;
 			    while(i < sectionRecords.length){
 			    	$j('#xavierTeacher').append(
-		   				'<table id="courseTable' + i + '" class="grid"><th colspan="4">' + sectionRecords[i].expression + ' ' + sectionRecords[i].courseName + '</th><tbody id="courseTableBody' + i + '"></tbody>'
+		   				'<table id="courseTable' + i + '" class="grid shrinkMe"><th class="clickTable"  href="." colspan="4">' + sectionRecords[i].expression + ' ' + sectionRecords[i].courseName + '</th><tbody id="courseTableBody' + i + '"></tbody>'
 			    	);
 			    	current = i;
-			    	console.log("current = " + current + "...i = " + i);
+					console.log('#courseTableBody' + current);
 		    		for(; i < (Number(sectionRecords[current].numberOfRecords) +current); i++){ 
 				    	$j('#courseTableBody' + current).append(
-			   				'<tr><td>' + sectionRecords[i].studentName + '</td><td>Character Class</td><td>EXP Points</td><td><input type="number" min=0 maxlength=5><input type="button" value="+"></td>'
+			   				'<tr><td>' + sectionRecords[i].studentName + '</td>'+
+							'<td><a href="">' + sectionRecords[i].studentClass + '</a></td>'+
+							'<td>' + sectionRecords[i].studentXP + '</td>'+
+							'<td><input type="number" min="0" maxlength="5" size="5"><input type="button" value="+"></td>'
 				    	);
-				    	console.log("current = " + (Number(sectionRecords[current].numberOfRecords) +current) + "...i = " + i);
 		    		}
 		    	}
 		   	  }  
@@ -40,6 +42,10 @@
 
 	  $j(document).ready(function() {	  
         callJSON();  
+		 $j('#xavierTeacher').on('click','.clickTable',function(){
+			console.log("click");
+			/* NOT FUNCTIONING $j('this').children('tbody').toggle();*/
+		}); 
       });
 	</script>
     <style>
