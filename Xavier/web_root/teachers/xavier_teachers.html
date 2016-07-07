@@ -2,30 +2,44 @@
 <html>
 <!-- start right frame -->
 <head>
-    <title>Student XClass Page</title>
+    <title>Teacher XClass Page</title>
     ~[wc:commonscripts]
     <link href="/images/css/screen.css" rel="stylesheet" media="screen">
     <link href="/images/css/print.css" rel="stylesheet" media="print">
     <script> 
-	  var ccRecords = [{teacherName:"Sue", courseName:"Math", experience:0, stuClass:"scholar"}];
-   	  function displayXavierStudent() {
-	    $j('#xavierStudent').empty();
-	   
-	    $j('#xavierStudent').append(
-	      '<table id="xavierTable" class="grid"><thead></thead><tbody id="xavierTableBody"></tbody></table>'
-	    );
-		
-		for(var i=0; i < ccRecords.length; i++){
-		  $j('#xavierTableBody').append(
-		  '<tr><td>' + ccRecords[i].teacherName + '</td><td>' + ccRecords[i].courseName + '</td>'+
-		    '<td>' + ccRecords[i].experience + '</td><td>' + ccRecords.stuClass + '</td>'
-		   );
-		}
+	  var sectionRecords = [];
+	  function callJSON (){
+	  $j.getJSON('/teachers/tech/xavier/grabTeacherSections.json',function(result){ 	  
+		result.pop();
+		sectionRecords = result;
+	  }).done(function(){
+	  displayXavierTeacher();
+	  });
 	  }
-		
-	  $j(document).ready(function() {
-	  
-        displayXavierStudent();  
+
+		  function displayXavierTeacher() {
+			    $j('#xavierTeacher').empty();
+			    var i = 0;
+			    var current = 0;
+			    while(i < sectionRecords.length){
+			    	$j('#xavierTeacher').append(
+		   				'<table id="courseTable' + i + '" class="grid"><th colspan="4">' + sectionRecords[i].expression + ' ' + sectionRecords[i].courseName + '</th><tbody id="courseTableBody' + i + '"></tbody>'
+			    	);
+			    	current = i;
+			    	console.log("current = " + current + "...i = " + i);
+		    		for(; i < (Number(sectionRecords[current].numberOfRecords) +current); i++){ 
+				    	$j('#courseTableBody' + current).append(
+			   				'<tr><td>' + sectionRecords[i].studentName + '</td><td>Character Class</td><td>EXP Points</td><td><input type="number" min=0 maxlength=5><input type="button" value="+"></td>'
+				    	);
+				    	console.log("current = " + (Number(sectionRecords[current].numberOfRecords) +current) + "...i = " + i);
+		    		}
+		    	}
+		   	  }  
+ 
+
+
+	  $j(document).ready(function() {	  
+        callJSON();  
       });
 	</script>
     <style>
@@ -33,16 +47,13 @@
 </head>
 <body>
 ~[wc:admin_header_frame_css]
-<!-- breadcrumb start --><a href="/admin/home.html" target="_top">~[text:psx.html.admin_students.honorroll.start_page]</a>
-&gt; <a href="home.html?selectstudent=nosearch" target="_top">~[text:psx.html.admin_students.honorroll.student_selection]</a>
-&gt;~[text:psx.html.admin_students.honorroll.honor_roll1]
-<!-- breadcrumb end -->~[wc:admin_navigation_frame_css] ~[wc:title_student_begin_css]Student Xavierr~[wc:title_student_end_css]
+~[wc:admin_navigation_frame_css] <h1>Teacher Xavier</h1>
 <div id="Error" name=Error" style="border-color: red;"></div>
-<div id="xavierStudent">
+<div id="xavierTeacher">
 	<table class ="grid" ><th> DOES THIS WORK </th> </table>
 	</div>
 <div name="anotherDiv"></div>
 <!-- end of content of bounding box -->
-~[wc:admin_footer_frame_css]
+~[wc:teachers_footer_fr_css]
 </body>
 </html>
