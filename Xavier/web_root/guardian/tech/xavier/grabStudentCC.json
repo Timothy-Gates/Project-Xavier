@@ -1,0 +1,11 @@
+[]~[tlist_sql;]SELECT id, studentid
+FROM ps.cc
+Where studentid=34
+]
+{
+"sectionNumber": "~(id)",
+"studentID": "~(studentid)"
+},
+[/tlist_sql]
+{}
+]
