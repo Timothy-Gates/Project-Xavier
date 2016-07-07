@@ -7,25 +7,36 @@
     <link href="/images/css/screen.css" rel="stylesheet" media="screen">
     <link href="/images/css/print.css" rel="stylesheet" media="print">
     <script> 
-	  var ccRecords = [{teacherName:"Sue", courseName:"Math", experience:0, stuClass:"scholar"}];
+	  var ccRecords = [];
+	  function callJSON (){
+	  $j.getJSON('/guardian/tech/xavier/grabStudentCC.json',function(result){ 
+	    alert("after JSON");	  
+		result.pop();
+		alert("after pop");
+		ccRecords = result;
+		alert("after var");
+	  }).done(function(){
+	  displayXavierStudent();
+	  });
+	  }
+	  
    	  function displayXavierStudent() {
 	    $j('#xavierStudent').empty();
 	   
 	    $j('#xavierStudent').append(
-	      '<table id="xavierTable" class="grid"><thead></thead><tbody id="xavierTableBody"></tbody></table>'
+	      '<table id="xavierTable" class="grid"><th>Teacher Name</th><th>Course Name</th><th>Experience Points</th><th>Class</th><tbody id="xavierTableBody"></tbody></table>'
 	    );
 		
 		for(var i=0; i < ccRecords.length; i++){
 		  $j('#xavierTableBody').append(
 		  '<tr><td>' + ccRecords[i].teacherName + '</td><td>' + ccRecords[i].courseName + '</td>'+
-		    '<td>' + ccRecords[i].experience + '</td><td>' + ccRecords.stuClass + '</td>'
+		    '<td>' + ccRecords[i].experience + '</td><td>' + ccRecords[i].stuClass + '</td>'
 		   );
 		}
 	  }
 		
-	  $j(document).ready(function() {
-	  
-        displayXavierStudent();  
+	  $j(document).ready(function() {	  
+        callJSON();  
       });
 	</script>
     <style>
