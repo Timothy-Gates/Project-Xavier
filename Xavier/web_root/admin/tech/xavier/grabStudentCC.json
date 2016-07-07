@@ -1,0 +1,18 @@
+[
+  ~[tlist_sql;
+SELECT a.section_number, b.course_name, c.teacher_name
+FROM ps.cc a
+LEFT JOIN ps.courses b
+ON a.course_number = b.course_number
+LEFT JOIN ps.teachers c
+ON a.teacherID = c.id
+WHERE a.studentID = ~(curstudid) and a.termid ~(curtermid)
+]
+{
+ "sectionNumber": "~(a.section_number)",
+ "courseName": "~("b.course_name)",
+ "teacherName": "~"(c.teacher_name)"
+},
+[/tlist_sql]
+{}
+]
