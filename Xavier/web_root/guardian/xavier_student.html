@@ -21,13 +21,13 @@
 	    $j('#xavierStudent').empty();
 	   
 	    $j('#xavierStudent').append(
-	      '<table class="grid"><th>Teacher Name</th><th>Course Name</th><th>Experience Points</th><tbody id="xavierTableBody"></tbody></table>'
+	      '<table class="grid"><th style="width:25%">Teacher Name</th><th style="width:25%">Class Name</th><th style="width:25%">Experience Points</th><th style="width:25%">Avatar</th><tbody id="xavierTableBody"></tbody></table>'
 	    );
 		
 		for(var i=0; i < ccRecords.length; i++){
 		  $j('#xavierStudent').append(
-		  '<table class ="grid"><tbody><tr><td class="studClassTable">' + ccRecords[i].teacher + '</td><td class="studClassTable">' + ccRecords[i].studClass + '</td>'+
-		    '<td class="studClassTable">' + ccRecords[i].experience + '</td><td class="studClassTable"><a href="/guardian/xavier_class.html?teacher=' + ccRecords[i].teacher +'&studClass=' + ccRecords[i].studClass +'"><img src = "/images/'+ ccRecords[i].studClass + '.jpg" height="200"/></a></td></tr></tbody><table>'
+		  '<table class ="grid"><tbody><tr><td class="studClassTable" align="center">' + ccRecords[i].teacher + '</td><td class="studClassTable" align="center">' + ccRecords[i].studClass + '</td>'+
+		    '<td class="studClassTable" align="center">' + ccRecords[i].experience + '</td><td class="studClassTable" align="center"><a href="/guardian/xavier_class.html?teacher=' + ccRecords[i].teacher +'&studClass=' + ccRecords[i].studClass +'"><img src = "/images/'+ ccRecords[i].studClass + '.jpg" height="200"/></a></td></tr></tbody><table>'
 		   );
 		}
 	  }
@@ -39,6 +39,9 @@
     <style>
     .studClassTable{
     	width: 25%;
+    	vertical-align: middle;
+    	font-size: 35px;
+    	font-weight: bold;
     }
       </style>
 </head>
