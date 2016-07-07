@@ -1,10 +1,23 @@
-[]~[tlist_sql;]SELECT id, studentid
-FROM ps.cc
-Where studentid=34
+[
+  ~[tlist_sql;
+SELECT a.id, a.dcid, b.ccdcid, b.xavier_experience, b.xavier_class, c.lastfirst, d.course_name
+FROM ps.cc a
+LEFT JOIN ps.u_def_ext_cc b
+ON a.dcid = b.ccdcid
+LEFT JOIN ps.teachers c
+ON a.teacherid = c.id
+LEFT JOIN ps.courses d
+ON a.course_number = d.course_number
+WHERE studentid=32
 ]
 {
-"sectionNumber": "~(id)",
-"studentID": "~(studentid)"
+ "ccid": "~(a.id)",
+ "dcid": "~(a.dcid)",
+ "ccdcid": "~(b.ccdcid)",
+ "experience" : "~(b.xavier_experience)",
+ "stuClass": "~(b.xavier_class)",
+ "teacherName": "~(b.lastfirst)",
+ "courseName":"~(c.course_name)"
 },
 [/tlist_sql]
 {}

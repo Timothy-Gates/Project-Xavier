@@ -1,0 +1,30 @@
+[
+  ~[tlist_sql;
+SELECT a.studentid, a.sectionid, a.course_number, a.expression,
+b.lastfirst, c.no_of_students, d.course_name, e.xavier_experience, e.xavier_class
+FROM ps.cc a
+LEFT JOIN ps.students b
+ON a.studentid = b.id
+LEFT JOIN ps.sections c
+ON a.sectionid = c.id
+LEFT JOIN ps.courses d
+ON a.course_number = d.course_number
+LEFT JOIN ps.u_def_ext_cc e
+ON a.dcid = e.ccdcid
+WHERE a.teacherid = ~[x:userid]
+ORDER BY a.expression
+]
+{
+"studentID": "~(a.studentid)",
+"sectionID": "~(a.sectionid)",
+"courseNumber":"~(a.course_number)",
+"expression": "~(a.expression)",
+"studentName": "~(b.lastfirst)",
+"numberOfRecords": "~(c.no_of_students)",
+"courseName": "~(d.course_name)",
+"studentXP": "~(e.xavier_experience)",
+"studentClass": "~(e.xavier_class)"
+},
+[/tlist_sql]
+{}
+]

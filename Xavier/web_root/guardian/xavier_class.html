@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<!-- start right frame -->
+<head>
+    <title>Class Page</title>
+    ~[wc:commonscripts]
+    <link href="/images/css/screen.css" rel="stylesheet" media="screen">
+    <link href="/images/css/print.css" rel="stylesheet" media="print">
+    <script> 
+	  var level = 3;
+	  var percent = 68;
+	  var classInfo = {};
+	  var group = [{name:"Shelly", studClass:"explorer", experience: 654}, {name:"James", studClass:"scholar", experience: 611}, {name:"Suzy", studClass:"explorer", experience: 1200}, {name:"Steven", studClass:"commander", experience: 888}];
+	  function loadPageInfo(){
+		  $j('#classInfoHeader').append(
+				  '~[gpv:studClass] Level: '  + level
+	  		);
+		  for(var i = 0; i<group.length; i++){
+			  $j('#groupInfoList').append(
+				'<tr><td style="width:85%"> ' + (i +Number(1)) + 
+				'</td><td><table class="grid" style="width:100%"><tbody><th>' + group[i].name + '</th>' +
+				'<th>' + group[i].studClass + '</th>' +
+				'<th>' + group[i].experience + '</th>' +
+				'<th><img src = "/images/' + group[i].studClass + '.jpg" height="100"/></th>' +
+				'</tbody></table></td>'
+			  );		  
+		  }
+		  $j('#experienceInfoBar').append(
+			'<tr><td style="width:'+ percent + '%; background-color:yellow;"></td><td style="width:'+ (Number(100)-Number(percent)) + '%; background-color:lightBlue;"></td>'  
+		  );
+		  
+	  }
+	  function collectExperience(){
+		  percent = Number(percent) + Number(5);
+		  $j('#experienceInfoBar').empty();
+		  $j('#experienceInfoBar').append(
+		    '<tr><td style="width:'+ percent + '%; background-color:yellow;"></td><td style="width:'+ (Number(100)-Number(percent)) + '%; background-color:lightBlue;"></td>'	  
+		  );
+	  }
+	  
+	  $j(document).ready(function() {	  
+	        loadPageInfo();
+	        $j('#experienceButton').click(function(){
+	        	collectExperience();
+	        });
+	      });
+	</script>
+    <style>
+    /*#content-main, td {
+	background-image: url("/images/black-felt.png");
+    }*/
+      </style>
+</head>
+<body>
+<form action="list.html" method="POST" id="notification">
+~[wc:admin_header_frame_css]
+<!-- breadcrumb start --><a href="/admin/home.html" target="_top">~[text:psx.html.admin_students.honorroll.start_page]</a>
+&gt; <a href="home.html?selectstudent=nosearch" target="_top">~[text:psx.html.admin_students.honorroll.student_selection]</a>
+&gt;~[text:psx.html.admin_students.honorroll.honor_roll1]
+<!-- breadcrumb end -->~[wc:admin_navigation_frame_css] ~[wc:title_student_begin_css]~[gpv:studClass] Page~[wc:title_student_end_css]
+<div id="Error" name=Error" style="border-color: red;"></div>
+<table><tbody>
+	<tr>
+		<td style="width:50%">	
+			<div id="classInfo" >
+				<table class="grid"><th id="classInfoHeader"></th><tbody>
+					<tr><td><img src = "/images/~[gpv:studClass].jpg"height="800"/></td>
+					</tr></tbody></table>
+			</div>
+		</td>
+		<td style="width:50%">
+			<div id="groupInfo">
+				<table class="linkDescList"><th colspan="2">Questing Group:</th><tbody id="groupInfoList"></tbody></table>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td style="width:50%">
+			<div name="experienceInfo">
+				<table class="grid"><th>Experience</th><tbody></tbody></table>
+				<table class="grid"><tbody id="experienceInfoBar"></tbody></table>	
+				<table class="grid"><th colspan="2">Daily Experience</th><tbody>
+				<tr><td>Daily Experience</td><td id="dailyExperience"></td></tr>
+				<tr><td>Attendance Modifier</td><td id="attendanceModifier"></td></tr>
+				<tr><td>Class Modifier</td><td id="classModifier"></td></tr>
+				<tr><td>Daily Experience</td><td id="dailyExperience"></td></tr>
+				<tr><td>Total Experience</td><td id="totalExperience"></td></tr>
+				</tbody></table>
+				<input type="button" value="Collect Daily Experience" id="experienceButton"/>
+			</div>
+		</td>
+		<td style="width:50%">
+			<div name="QuestInfo">
+				<table class="grid"><th colspan="3">Current Quests:</th><tbody>
+					<tr><td>Quest:</td><td>Goals:</td><td>Rewards:</td>
+					<tr><td>1</td><td>Maintain 2 weeks of perfect attendance and perfect homework Submission</td><td>350 Experience Points</td>
+					<tr><td>2</td><td>Report on the California Missions</td><td>200 Experience Points</td>	
+					<tr><td>3</td><td>Run a new Personal Best in the Mile</td><td>150 Experience Points</td>	
+					<tr><td>4</td><td>Solve the Bonus Math Problem</td><td>500 Experience Points</td>						
+				</tbody></table>
+				<table class="grid"><th colspan="3">Current Vision:</th><tbody>
+					<tr><td>Part:</td><td>Goals:</td><td>Rewards:</td>
+					<tr><td>1</td><td>One group member must collect Full Plate Armor</td><td rowspan="3">3500 Experience Points each '\r\n' Group recieves free day off \r\n Group does not have to take the final</td>
+					<tr><td>2</td><td>Group must complete 12 quests</td>
+					<tr><td>3</td><td>Group must all reach Lvl 4</td>					
+				</tbody></table>
+			</div>
+		</td>
+	</tr>
+</tbody></table>
+<!-- end of content of bounding box -->
+~[wc:admin_footer_frame_css]
+</form>
+</body>
+</html>
+
+
+
