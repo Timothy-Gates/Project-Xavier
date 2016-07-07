@@ -7,30 +7,27 @@
     <link href="/images/css/screen.css" rel="stylesheet" media="screen">
     <link href="/images/css/print.css" rel="stylesheet" media="print">
     <script> 
-	  var ccRecords = [];
+	  var ccRecords = [{teacher:"Justin", studClass:"Scholar", experience:345},{teacher:"Mary", studClass:"Explorer", experience:1101},{teacher:"Jamie", studClass:"Commander", experience:808}];
 	  function callJSON (){
-	  $j.getJSON('/guardian/tech/xavier/grabStudentCC.json',function(result){ 
-	    alert("after JSON");	  
+	  /*$j.getJSON('/guardian/tech/xavier/grabStudentCC.json',function(result){ 	  
 		result.pop();
-		alert("after pop");
 		ccRecords = result;
-		alert("after var");
 	  }).done(function(){
 	  displayXavierStudent();
-	  });
+	  });*/
+	  displayXavierStudent();
 	  }
-	  
    	  function displayXavierStudent() {
 	    $j('#xavierStudent').empty();
 	   
 	    $j('#xavierStudent').append(
-	      '<table id="xavierTable" class="grid"><th>Teacher Name</th><th>Course Name</th><th>Experience Points</th><th>Class</th><tbody id="xavierTableBody"></tbody></table>'
+	      '<table class="grid"><th style="width:25%">Teacher Name</th><th style="width:25%">Class Name</th><th style="width:25%">Experience Points</th><th style="width:25%">Avatar</th><tbody id="xavierTableBody"></tbody></table>'
 	    );
 		
 		for(var i=0; i < ccRecords.length; i++){
-		  $j('#xavierTableBody').append(
-		  '<tr><td>' + ccRecords[i].teacherName + '</td><td>' + ccRecords[i].courseName + '</td>'+
-		    '<td>' + ccRecords[i].experience + '</td><td>' + ccRecords[i].stuClass + '</td>'
+		  $j('#xavierStudent').append(
+		  '<table class ="grid"><tbody><tr><td class="studClassTable" align="center">' + ccRecords[i].teacher + '</td><td class="studClassTable" align="center">' + ccRecords[i].studClass + '</td>'+
+		    '<td class="studClassTable" align="center">' + ccRecords[i].experience + '</td><td class="studClassTable" align="center"><a href="/guardian/xavier_class.html?teacher=' + ccRecords[i].teacher +'&studClass=' + ccRecords[i].studClass +'"><img src = "/images/'+ ccRecords[i].studClass + '.jpg" height="200"/></a></td></tr></tbody><table>'
 		   );
 		}
 	  }
@@ -40,6 +37,12 @@
       });
 	</script>
     <style>
+    .studClassTable{
+    	width: 25%;
+    	vertical-align: middle;
+    	font-size: 35px;
+    	font-weight: bold;
+    }
       </style>
 </head>
 <body>
