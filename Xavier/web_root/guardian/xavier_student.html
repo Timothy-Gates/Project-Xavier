@@ -7,12 +7,7 @@
     <link href="/images/css/screen.css" rel="stylesheet" media="screen">
     <link href="/images/css/print.css" rel="stylesheet" media="print">
     <script> 
-<<<<<<< HEAD
-	  var ccRecords = [{course:"Math", teacher:"Ms. Johnson", studClass:"Scholar", experience:345},{course:"Science", teacher:"Mr. Smith", studClass:"Explorer", experience:1101},{course:"Social Studies", teacher:"Mrs. Richardson", studClass:"Commander", experience:808}];
-=======
 	  var ccRecords = [];
->>>>>>> b8bfb594aaa575c00b41a5b8a7b8819b6b7bf1e6
-
 	  function callJSON (){
 	  $j.getJSON('/guardian/tech/xavier/grabStudentCC.json',function(result){ 	  
 		result.pop();
@@ -32,11 +27,8 @@
 		for(var i=0; i < ccRecords.length; i++){
 	
 		  $j('#xavierStudent').append(
-<<<<<<< HEAD
-		  '<table class ="linkDescList"><tbody><tr><td class="studClassTable" align="center"><a href="/guardian/xavier_class.html?teacher=' + ccRecords[i].teacher +'&studClass=' + ccRecords[i].studClass +'"><img src = "/images/'+ ccRecords[i].studClass + '.jpg" height="200"/><td class="studClassTable" align="center">' + ccRecords[i].course + '</td><td class="studClassTable" align="center">' + ccRecords[i].teacher + '</td><td class="studClassTable" align="center">' + ccRecords[i].studClass + '</td>'+
-=======
+
 		  '<table class ="linkDescList"><tbody><tr><td class="studClassTable" align="center"><a href="/guardian/xavier_class.html?teacher=' + ccRecords[i].teacher +'&studClass=' + ccRecords[i].studClass +'"><img src = "/images/'+ ccRecords[i].studClass + '.jpg" height="200"/><td class="studClassTable" align="center">' + ccRecords[i].course + '</td><td class="studClassTable" align="center">' + ccRecords[i].teacher + '</td><td class="studClassTable" id="studClassStyle'+i+'" align="center">' + ccRecords[i].studClass + '</td>'+
->>>>>>> b8bfb594aaa575c00b41a5b8a7b8819b6b7bf1e6
 		    '<td class="studClassTable" align="center">' + ccRecords[i].experience + '</td></a></td></tr></tbody><table>'
 		   );
 		   
@@ -65,13 +57,8 @@
     	vertical-align: middle;
     	font-size: 25px;
     	font-weight: bold;
-<<<<<<< HEAD
-    }
-
-=======
 		box-shadow: 10px 10px 5px #888888;
     }	
->>>>>>> b8bfb594aaa575c00b41a5b8a7b8819b6b7bf1e6
       </style>
 </head>
 <body>
