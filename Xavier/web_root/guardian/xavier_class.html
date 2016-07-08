@@ -140,6 +140,9 @@
 		  	  $j('#classImage').append(	
 			  	'<img src = "/images/~[gpv:studClass]1.jpg"height="800"/>'
 			  );
+		  	  $j('html, body').animate({scrollTop:0}, 'slow');
+		  	  
+		  	  $j('#levelUp').toggle('slow'); 
 		  }
 		  loadPageInfo();
 	  }
@@ -150,6 +153,9 @@
 	        $j('#experienceButton').click(function(){
 				collectExperience();
 	        });
+	        $j('#levelUp').click(function(){
+	        	$j('#levelUp').toggle(); 
+	        })
 	      });
 	</script>
     <style>
@@ -173,9 +179,21 @@
   		background: -moz-linear-gradient(blue, lightBlue, blue); /* For Firefox 3.6 to 15 */
   		background: linear-gradient(blue, lightBlue, blue); /* Standard syntax */
 	}
+	#levelUp {
+		display: none;
+		background: blue; /* For browsers that do not support gradients */
+  		background: -webkit-linear-gradient(black, lightBlue, black); /* For Safari 5.1 to 6.0 */
+  		background: -o-linear-gradient(black, lightBlue, black); /* For Opera 11.1 to 12.0 */
+  		background: -moz-linear-gradient(black, lightBlue, black); /* For Firefox 3.6 to 15 */
+  		background: linear-gradient(black, lightBlue, black); /* Standard syntax */
+  		width: 100%;
+  		height: 100%;
+  		vertical-align: middle;
+	}
       </style>
 </head>
 <body>
+<div id="levelUp" align="center"><div align="center" style="font-size:100px; color: #b9bf00; line-height:200%; height: 80%">Congradulations!!! <br> You Leveled Up!<br> You gained 1 new Skill Point <br> Some of your skills have leveled up as well!!</div></div>
 <form action="list.html" method="POST" id="notification">
 ~[wc:admin_header_frame_css]
 ~[wc:admin_navigation_frame_css]
