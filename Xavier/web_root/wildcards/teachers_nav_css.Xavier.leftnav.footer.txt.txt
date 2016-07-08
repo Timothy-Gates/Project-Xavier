@@ -1,5 +1,6 @@
 <script>
     $j('#nav-main ul').append(
-        '<li><a href="/teachers/xavier_teachers.html?teacherID=~[x:userid]">Xavier Teacher</a></li>'
+        '<li><a href="/teachers/xavier_teachers.html?teacherID=~[x:userid]">Xavier Teacher</a></li>'+
+		'<li><a href="/teachers/xavier_teachersConfig.html?teacherID=~[x:userid]">Xavier Characters</a></li>'
     );        
 </script>
