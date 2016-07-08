@@ -7,11 +7,16 @@
     <link href="/images/css/screen.css" rel="stylesheet" media="screen">
     <link href="/images/css/print.css" rel="stylesheet" media="print">
     <script> 
+      var experience = ~[gpv:experience];	
       var loaded = 0;
 	  var level = 3;
 	  var percent = 68;
 	  var classInfo = {};
 	  var attInfo = {};
+	  var totalXP = 0;
+	  var gearModifier = 1.0;
+	  var classModifier = 1.25;
+	  var dailyXP = 15;
 	  var group = [{name:"Shelly", studClass:"explorer", experience: 654}, {name:"James", studClass:"scholar", experience: 611}, {name:"Suzy", studClass:"explorer", experience: 1200}, {name:"Steven", studClass:"commander", experience: 888}];
 	  
 	  function GetFormattedDate(date) {
@@ -28,6 +33,7 @@
 		  now = GetFormattedDate(now);
 		  $j.getJSON('/guardian/tech/xavier/grabATT.json?frn=001~(curstudid)&startDate='+ now + '&endDate=' + today,function(result){ 
 			attInfo = result;
+			attInfo.ada=1+(attInfo.ada/10);
 		  }).done(function(){
 			  	readyCheck();
 		  });
@@ -47,34 +53,65 @@
 	  }
 
 	  function loadPageInfo(){
-		  var levels = classInfo.levels.split('l');
-		  for(var i = 0; i< levels.length; i++){
-			  level = i +1;
-			  if((i + Number(1)) == levels.length){
+		  var levels = classInfo.levels.split('L');
+		  for(var i = 0; i< levels.length; i++){		  
+			  level = i+1;
+			  if((i+1) == levels.length){
 				  percent = 100;
 				  break;
 			  }
-			  if(!Number(~[gpv:experience])>=Number(levels[i+1])){
-				  percent = 100*(~[gpv:experience]/levels[i]);
+			  if(experience<levels[i+1]){			  			 
+				  percent = 100*((experience-levels[i])/(levels[i+1]-levels[i]));
 				  break;
 			  }
 		  }
-		  console.log(percent);
+		  totalXP = (dailyXP*attInfo.ada*classModifier*gearModifier);
+		  $j('#classInfoHeader').empty();
 		  $j('#classInfoHeader').append(
 				  '~[gpv:studClass] Level: '  + level
 	  		);
+		  $j('#groupInfoList').empty();
 		  for(var i = 0; i<group.length; i++){
 			  $j('#groupInfoList').append(
-				'<tr><td style="width:85%"> ' + (i +Number(1)) + 
-				'</td><td><table class="grid" style="width:100%"><tbody><th>' + group[i].name + '</th>' +
+				'<tr><td align="center" style="vertical-align:middle; font-weight:bold;"> ' + (i +Number(1)) + 
+				'</td><td style="width:85%"><table class="grid" style="width:100%"><tbody><th>' + group[i].name + '</th>' +
 				'<th>' + group[i].studClass + '</th>' +
 				'<th>' + group[i].experience + '</th>' +
 				'<th><img src = "/images/' + group[i].studClass + '.jpg" height="100"/></th>' +
 				'</tbody></table></td>'
 			  );		  
 		  }
+		  $j('#experienceInfoBar').empty();
 		  $j('#experienceInfoBar').append(
 			'<tr><td style="width:'+ percent + '%; background-color:yellow;"></td><td style="width:'+ (Number(100)-Number(percent)) + '%; background-color:lightBlue;"></td>'  
+		  );
+		  $j('#dailyExperience').empty();
+		  $j('#dailyExperience').append(
+			''+dailyXP+''
+		  );
+		  $j('#attendanceModifier').empty();
+		  $j('#attendanceModifier').append(
+			''+attInfo.ada+'x'
+    	  );
+		  $j('#classModifier').empty();
+		  $j('#classModifier').append(
+			''+classModifier+'x'
+		  );
+		  $j('#gearModifier').empty();
+		  $j('#gearModifier').append(
+			''+gearModifier+'x'
+		  );
+		  $j('#totalExperience').empty();
+		  $j('#totalExperience').append(
+			''+totalXP+''
+		  );
+		  $j('#experienceOwned').empty();
+		  $j('#experienceOwned').append(
+				'Current Experience: '+Math.floor(experience)+''
+		  );
+		  $j('#experienceNeeded').empty();
+		  $j('#experienceNeeded').append(
+					'Needed Experience: '+Math.floor(levels[level]-experience)+''
 		  );
 		  
 	  }
@@ -86,18 +123,26 @@
 		  );
 	  }
 	  
-	  $j(document).ready(function() {	  
+	  $j(document).ready(function() {	
 	        grabClassDef();
 	        grabAtt();
 	        $j('#experienceButton').click(function(){
-	        	collectExperience();
+				experience += totalXP;
+				loadPageInfo();
 	        });
 	      });
 	</script>
     <style>
-    /*#content-main, td {
+    #content-main, td {
+    background-color: brown;
 	background-image: url("/images/black-felt.png");
-    }*/
+    }
+    table, #experienceButton{
+    	box-shadow: 10px 10px 5px #888888;
+    }
+    #ignore{
+    box-shadow: 0px 0px 0px #888888;
+    }
       </style>
 </head>
 <body>
@@ -106,34 +151,37 @@
 <!-- breadcrumb start --><a href="/admin/home.html" target="_top">~[text:psx.html.admin_students.honorroll.start_page]</a>
 &gt; <a href="home.html?selectstudent=nosearch" target="_top">~[text:psx.html.admin_students.honorroll.student_selection]</a>
 &gt;~[text:psx.html.admin_students.honorroll.honor_roll1]
-<!-- breadcrumb end -->~[wc:admin_navigation_frame_css] ~[wc:title_student_begin_css]~[gpv:studClass] Page~[wc:title_student_end_css]
+<!-- breadcrumb end -->~[wc:admin_navigation_frame_css]
 <div id="Error" name=Error" style="border-color: red;"></div>
-<table><tbody>
+<div align="center" style="height:200px"><table style="width:50%;" class="grid"><tbody><tr><td align="center" style="line-height: 200%; font-weight:bold; font-size:84px; font-family:Papyrus; vertical-align:middle;" >The ~[gpv:studClass]</tbody></table></div>
+<table id="ignore"><tbody>
 	<tr>
 		<td style="width:50%">	
 			<div id="classInfo" >
-				<table class="grid"><th id="classInfoHeader"></th><tbody>
+				<table class="grid"><th colspan="2" id="classInfoHeader"></th><tbody>
 					<tr><td><img src = "/images/~[gpv:studClass].jpg"height="800"/></td>
 					</tr></tbody></table>
 			</div>
 		</td>
 		<td style="width:50%">
 			<div id="groupInfo">
-				<table class="linkDescList"><th colspan="2">Questing Group:</th><tbody id="groupInfoList"></tbody></table>
+				<table class="grid"><th colspan="2">Questing Group:</th><tbody id="groupInfoList"></tbody></table>
 			</div>
 		</td>
 	</tr>
 	<tr>
 		<td style="width:50%">
 			<div name="experienceInfo">
-				<table class="grid"><th>Experience</th><tbody></tbody></table>
+				<table class="grid"><th colspan="2">Experience</th><tbody></tbody>
+					<td align="center" id="experienceOwned"></td><td align="center" id="experienceNeeded"></td>
+				</table>
 				<table class="grid"><tbody id="experienceInfoBar"></tbody></table>	
 				<table class="grid"><th colspan="2">Daily Experience</th><tbody>
 				<tr><td>Daily Experience</td><td id="dailyExperience"></td></tr>
 				<tr><td>Attendance Modifier</td><td id="attendanceModifier"></td></tr>
 				<tr><td>Class Modifier</td><td id="classModifier"></td></tr>
-				<tr><td>Daily Experience</td><td id="dailyExperience"></td></tr>
-				<tr><td>Total Experience</td><td id="totalExperience"></td></tr>
+				<tr><td>Gear Modifier</td><td id="gearModifier"></td></tr>
+				<tr><td>Total Experience</td><td style="font-weight:bold" id="totalExperience"></td></tr>
 				</tbody></table>
 				<input type="button" value="Collect Daily Experience" id="experienceButton"/>
 			</div>
@@ -149,7 +197,7 @@
 				</tbody></table>
 				<table class="grid"><th colspan="3">Current Vision:</th><tbody>
 					<tr><td>Part:</td><td>Goals:</td><td>Rewards:</td>
-					<tr><td>1</td><td>One group member must collect Full Plate Armor</td><td rowspan="3">3500 Experience Points each '\r\n' Group recieves free day off \r\n Group does not have to take the final</td>
+					<tr><td>1</td><td>One group member must collect Full Plate Armor</td><td rowspan="3">3500 Experience Points each <br> Group recieves free day off <br> Group does not have to take the final</td>
 					<tr><td>2</td><td>Group must complete 12 quests</td>
 					<tr><td>3</td><td>Group must all reach Lvl 4</td>					
 				</tbody></table>
