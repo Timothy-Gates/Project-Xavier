@@ -7,11 +7,59 @@
     <link href="/images/css/screen.css" rel="stylesheet" media="screen">
     <link href="/images/css/print.css" rel="stylesheet" media="print">
     <script> 
+      var loaded = 0;
 	  var level = 3;
 	  var percent = 68;
 	  var classInfo = {};
+	  var attInfo = {};
 	  var group = [{name:"Shelly", studClass:"explorer", experience: 654}, {name:"James", studClass:"scholar", experience: 611}, {name:"Suzy", studClass:"explorer", experience: 1200}, {name:"Steven", studClass:"commander", experience: 888}];
+	  
+	  function GetFormattedDate(date) {
+		    var month = date.getMonth() + Number(1);
+		    var day = date.getDate();
+		    var year = date.getFullYear();
+		    return month + "/" + day + "/" + year;
+		}
+	  function grabAtt(){
+		  var today = new Date();
+		  var now = new Date();
+		  now.setDate(now.getDate() - 7);
+		  today = GetFormattedDate(today);
+		  now = GetFormattedDate(now);
+		  $j.getJSON('/guardian/tech/xavier/grabATT.json?frn=001~(curstudid)&startDate='+ now + '&endDate=' + today,function(result){ 
+			attInfo = result;
+		  }).done(function(){
+			  	readyCheck();
+		  });
+	  }
+	  function grabClassDef(){
+		  $j.getJSON('/guardian/tech/xavier/grabClassDef.json?teacherID=~[gpv:teacher]&class=~[gpv:studClass]' ,function(result){ 
+				classInfo = result;
+		  }).done(function(){
+		  	readyCheck();
+		  });
+	  }
+	  function readyCheck(){
+		  if(loaded == 1){
+			  loadPageInfo();
+		  }
+		  loaded++;
+	  }
+
 	  function loadPageInfo(){
+		  var levels = classInfo.levels.split('l');
+		  for(var i = 0; i< levels.length; i++){
+			  level = i +1;
+			  if((i + Number(1)) == levels.length){
+				  percent = 100;
+				  break;
+			  }
+			  if(!Number(~[gpv:experience])>=Number(levels[i+1])){
+				  percent = 100*(~[gpv:experience]/levels[i]);
+				  break;
+			  }
+		  }
+		  console.log(percent);
 		  $j('#classInfoHeader').append(
 				  '~[gpv:studClass] Level: '  + level
 	  		);
@@ -39,7 +87,8 @@
 	  }
 	  
 	  $j(document).ready(function() {	  
-	        loadPageInfo();
+	        grabClassDef();
+	        grabAtt();
 	        $j('#experienceButton').click(function(){
 	        	collectExperience();
 	        });
