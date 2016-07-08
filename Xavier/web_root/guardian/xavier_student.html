@@ -26,50 +26,37 @@
 	    );
 		
 		for(var i=0; i < ccRecords.length; i++){
-<<<<<<< HEAD
-			
-			
-		  $j('#xavierStudent').append(
 
-		  '<table class="linkDescList studClassRecord'+i+'"><tbody><tr><td class="studClassTable record' +i+'" align="center"><a href="/guardian/xavier_class.html?teacher=' + ccRecords[i].teacherID +'&studClass=' + ccRecords[i].stuClass +'&ccdcid='+ccRecords[i].ccdcid+'&experience='+ccRecords[i].experience+'"><img class="hasBorder" src = "/images/'+ ccRecords[i].stuClass + '.jpg" height="200"/><td class="studClassTable record' +i+'" align="center">' + ccRecords[i].courseName + '</td><td class="studClassTable record' +i+'" align="center">' + ccRecords[i].teacherName + '</td><td class="studClassTable record' +i+'" align="center">' + ccRecords[i].stuClass + '</td>'+
-=======
 			color = (ccRecords[i].stuClass == 'Commander'?'e60000':(ccRecords[i].stuClass == 'Scholar'?'cb3434':'000099'))
 			
 		  $j('#xavierStudent').append(
 
 		  '<table class="linkDescList studClassRecord'+i+'"><tbody><tr><td class="studClassTable record' +i+'" align="center"><a href="/guardian/xavier_class.html?teacher=' + ccRecords[i].teacherID +'&studClass=' + ccRecords[i].stuClass +'&ccdcid='+ccRecords[i].ccdcid+'&experience='+ccRecords[i].experience+'&color='+color+'"><img class="hasBorder" src = "/images/'+ ccRecords[i].stuClass + '.jpg" height="200"/><td class="studClassTable record' +i+'" align="center">' + ccRecords[i].courseName + '</td><td class="studClassTable record' +i+'" align="center">' + ccRecords[i].teacherName + '</td><td class="studClassTable record' +i+'" align="center">' + ccRecords[i].stuClass + '</td>'+
->>>>>>> 91284acf7aae0c7c347d991edd24d09cbb34a60c
 
 		    '<td class="studClassTable record' +i+'" align="center">' + ccRecords[i].experience + ' XP</td></a></td></tr></tbody><table>'
 		   );
 		   
 		   if(ccRecords[i].stuClass == 'Commander'){
 				$j('.studClassRecord'+ i).css({'color': 'white', 'font-family': 'Papyrus', 'border': '3px solid black'});
-<<<<<<< HEAD
-				$j('.record'+ i).css('background-color', '#e60000');
-=======
+
 				$j('.record'+ i).css('background-color', '#'+color);
->>>>>>> 91284acf7aae0c7c347d991edd24d09cbb34a60c
+
 		   }
 		   
 		   
 		   else if(ccRecords[i].stuClass == 'Scholar'){
 				$j('.studClassRecord'+ i).css({'color': 'white', 'font-family': 'Papyrus', 'border': '3px solid black'});
-<<<<<<< HEAD
-				$j('.record'+ i).css('background-color', '#cb3434');
-=======
+
 				$j('.record'+ i).css('background-color', '#'+color);
->>>>>>> 91284acf7aae0c7c347d991edd24d09cbb34a60c
+
 		   }
 		   
 		   
 		   else if(ccRecords[i].stuClass == 'Explorer'){
 				$j('.studClassRecord'+ i).css({'color': 'white', 'font-family': 'Papyrus', 'border': '3px solid black'});
-<<<<<<< HEAD
-				$j('.record'+ i).css('background-color', '#000099');
-=======
+
 				$j('.record'+ i).css('background-color', '#'+color);
->>>>>>> 91284acf7aae0c7c347d991edd24d09cbb34a60c
+
 		   }
 
 		}
@@ -90,7 +77,7 @@
 		background-image: url(/images/black-felt.png);
     }	
 	
-<<<<<<< HEAD
+
 	img.hasBorder { border:2px solid black; margin-top: 20px;}
       </style>
 <!-- start of page body --> 
@@ -99,17 +86,7 @@
 <!-- start student content --> 
 <div class="box-round"> 
 
-=======
-	img.hasBorder { border:2px solid black;}
-      </style>
-</head>
-<body>
-~[wc:admin_header_frame_css]
-<!-- breadcrumb start --><a href="/admin/home.html" target="_top">~[text:psx.html.admin_students.honorroll.start_page]</a>
-&gt; <a href="home.html?selectstudent=nosearch" target="_top">~[text:psx.html.admin_students.honorroll.student_selection]</a>
-&gt;~[text:psx.html.admin_students.honorroll.honor_roll1]
-<!-- breadcrumb end -->~[wc:admin_navigation_frame_css]
->>>>>>> 91284acf7aae0c7c347d991edd24d09cbb34a60c
+
 <div id="Error" name=Error" style="border-color: red;"></div>
 
 <div align="center" style="height: 200px">
