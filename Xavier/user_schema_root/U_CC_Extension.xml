@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<psExtension xmlns="http://www.powerschool.com" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.powerschool.com psextension.xsd">
-    <extensionname>U_CC_Extension</extensionname>
-    <extendedTable coreTable="CC" dbTableName="U_DEF_EXT_CC" comment="">
-        <field name="Xavier_Experience" type="Integer" defaultValue="0"/>
-        <field name="Xavier_Class" type="String" length="40" defaultValue="Scholar"/>
-    </extendedTable>
-</psExtension>
