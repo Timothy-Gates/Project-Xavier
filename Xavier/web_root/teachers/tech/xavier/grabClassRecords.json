@@ -1,0 +1,16 @@
+[
+  ~[tlist_sql;
+SELECT id, name, levels, teacherid, skilltree
+FROM U_Xavier_Class_Def
+WHERE teacherid='~[gpv:teacherID]' 
+]
+{
+ "recordID": "~(id)",
+ "className": "~(name)",
+ "levels": "~(levels)",
+ "teacherID": "~(teacherid)",
+ "skillTree": "~(skilltree)"
+},
+[/tlist_sql]
+{}
+]

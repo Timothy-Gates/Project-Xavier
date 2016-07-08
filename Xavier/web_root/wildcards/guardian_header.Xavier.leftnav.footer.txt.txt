@@ -1,0 +1,5 @@
+<script>
+    $j('#nav-main ul').append(
+        '<li  id="btn-schoolBulletin"><a href="/guardian/xavier_student.html?frn=~(frn)">My Roster</a></li>'
+    );        
+</script>

@@ -23,16 +23,16 @@
 			    var current = 0;
 			    while(i < sectionRecords.length){
 			    	$j('#xavierTeacher').append(
-		   				'<table id="courseTable' + i + '" class="grid shrinkMe"><th class="clickTable"  href="." colspan="4">' + sectionRecords[i].expression + ' ' + sectionRecords[i].courseName + '</th><tbody id="courseTableBody' + i + '"></tbody>'
+		   				'<table id="courseTable' + i + '" class="grid shrinkMe"><th class="clickTable"  href="." colspan="4">' + sectionRecords[i].expression + ' ' + sectionRecords[i].courseName + ' Total Students:' + sectionRecords[i].numberOfRecords + '</th><tbody id="courseTableBody' + i + '"></tbody>'
 			    	);
 			    	current = i;
 					console.log('#courseTableBody' + current);
 		    		for(; i < (Number(sectionRecords[current].numberOfRecords) +current); i++){ 
 				    	$j('#courseTableBody' + current).append(
 			   				'<tr><td>' + sectionRecords[i].studentName + '</td>'+
-							'<td><a href="">' + sectionRecords[i].studentClass + '</a></td>'+
+							'<td><a href="/teachers/xavier_teachersConfig.html?teacherid="'+ ~[x:userid] +'">' + sectionRecords[i].studentClass + '</a></td>'+
 							'<td>' + sectionRecords[i].studentXP + '</td>'+
-							'<td><input type="number" min="0" maxlength="5" size="5"><input type="button" value="+"></td>'
+							'<td><input type="number" name="CC.U_DEF_EXT_CC.xavier_experience" min="'+ sectionRecords[i].studentXP + '" value="'+ sectionRecords[i].studentXP + '" maxlength="5" size="5"><input type="button" id="submitButton" href="#" value="+"></td>'
 				    	);
 		    		}
 		    	}
@@ -46,20 +46,29 @@
 			console.log("click");
 			/* NOT FUNCTIONING $j('this').children('tbody').toggle();*/
 		}); 
+		$j('#xavierTeacher').on('click','#submitButton', function(){
+			$j('#classUpdate').submit();
+		});
       });
 	</script>
     <style>
       </style>
 </head>
 <body>
-~[wc:admin_header_frame_css]
-~[wc:admin_navigation_frame_css] <h1>Teacher Xavier</h1>
-<div id="Error" name=Error" style="border-color: red;"></div>
-<div id="xavierTeacher">
-	<table class ="grid" ><th> DOES THIS WORK </th> </table>
-	</div>
-<div name="anotherDiv"></div>
-<!-- end of content of bounding box -->
+<form method="POST" id="classUpdate">
+~[wc:teachers_header_css] 
+~[wc:teachers_navigation_css]
+<!-- sets active navigation tab --> 
+~[SetPostValue:tabname=home] 
+~[wc:teachers_nav_css] 
+<h1>Teacher Xavier</h1>
+	<form name="navigation"> 
+<!-- start of content area --> 
+<div class="box-round"> 
+	<div id="Error" name=Error" style="border-color: red;"></div>
+	<div id="xavierTeacher"></div>
+</div>
+<!-- end of content area -->
 ~[wc:teachers_footer_fr_css]
 </body>
 </html>

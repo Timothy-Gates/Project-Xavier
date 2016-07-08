@@ -1,0 +1,5 @@
+<script>
+    $j('#nav-main ul').append(
+        '<li><a href="/teachers/xavier_teachers.html?teacherID=~[x:userid]">Xavier Teacher</a></li>'
+    );        
+</script>
