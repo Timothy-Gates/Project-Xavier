@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>XClass Config</title>
+<!-- required scripts -->
+	~[wc:commonscripts] 
+<!-- Required style sheets: screen.css, and print.css -->
+	<link href="/images/css/screen.css" rel="stylesheet" media="screen">
+	<link href="/images/css/print.css" rel="stylesheet" media="print">
+	    <script> 
+	  var classRecords = [];
+	  var levels;
+	  function callJSON (){
+	  $j.getJSON('/teachers/tech/xavier/grabClassRecords.json?teacherID=' + ~[x:userid],function(result){ 	  
+		result.pop();
+		classRecords = result;
+	  }).done(function(){
+	  displayXavierConfig();
+	  });
+	  }
+	  function displayXavierConfig() {
+		    $j('#xavierConfig').empty();
+		    for(var i=0; i < classRecords.length; i++){
+		    	levels = classRecords[i].levels.split('L');
+			    $j('#xavierConfig').append(
+		   				'<table class="grid"><th colspan="20">'+
+		   				'The ' + classRecords[i].className + '</th><tbody id="configTableBody'+i+'"></tbody></table>'
+		   				
+			    );
+			    $j('#configTableBody'+i).append(
+			    		'<td align="center" style="vertical-align:middle">Avatar:</td><td align="center" style="vertical-align:middle">SkillTreeLocation:</td>'
+			    );
+			    for(var j=0; j<levels.length; j++){
+			    	$j('#configTableBody'+i).append(
+				    		'<td align="center" style="vertical-align:middle">Level '+(j+1)+' Requirements:</td>'
+				    );
+			    }
+			    $j('#configTableBody'+i).append(
+			    		'<tr><td class="divider" colspan="20" style="height:3px; background:black;"></tr>'
+			    );
+		    	$j('#configTableBody'+i).append(
+			    		'<td align="center"><img src = "/images/' + classRecords[i].className + '.jpg" height="100"/></td>'+
+			    		'<td align="center" style="vertical-align:middle">'+classRecords[i].skillTree+'</td>'
+			    );
+		    	for(var j=0; j<levels.length; j++){
+				    	$j('#configTableBody'+i).append(
+					    		'<td align="center" style="vertical-align:middle">'+levels[j]+' xp</td>'
+					    );
+				}
+		    }
+   	  }  
+	  $j(document).ready(function() {	  
+        callJSON();  
+      });
+	</script>
+	<style>
+	.divider{
+    padding: 0 10px 0 0;
+    margin: 0;
+    border: 0;
+	}
+	</style>
+</head> 
+<body> 
+~[wc:teachers_header_css] 
+~[wc:teachers_navigation_css] 
+<!-- sets active navigation tab --> 
+~[SetPostValue:tabname=home] 
+~[wc:teachers_nav_css] 
+	<h1>Xavier Class Config</h1> 
+	<form name="navigation"> 
+<!-- start of content area --> 
+	<div class="box-round"> 
+		 <div id="xavierConfig"></div>
+	</div> 
+<!-- end of content area --> 
+~[wc:teachers_footer_css]
+</body> 
+</html>
+

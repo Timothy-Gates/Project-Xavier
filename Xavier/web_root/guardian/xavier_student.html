@@ -8,6 +8,7 @@
     <link href="/images/css/print.css" rel="stylesheet" media="print">
     <script> 
 	  var ccRecords = [];
+	  var color;
 	  function callJSON (){
 	  $j.getJSON('/guardian/tech/xavier/grabStudentCC.json?id=~(curstudid)',function(result){ 	  
 		result.pop();
@@ -25,30 +26,30 @@
 	    );
 		
 		for(var i=0; i < ccRecords.length; i++){
-			
+			color = (ccRecords[i].stuClass == 'Commander'?'e60000':(ccRecords[i].stuClass == 'Scholar'?'cb3434':'000099'))
 			
 		  $j('#xavierStudent').append(
 
-		  '<table class="linkDescList studClassRecord'+i+'"><tbody><tr><td class="studClassTable record' +i+'" align="center"><a href="/guardian/xavier_class.html?teacher=' + ccRecords[i].teacherID +'&studClass=' + ccRecords[i].stuClass +'&ccdcid='+ccRecords[i].ccdcid+'&experience='+ccRecords[i].experience+'"><img class="hasBorder" src = "/images/'+ ccRecords[i].stuClass + '.jpg" height="200"/><td class="studClassTable record' +i+'" align="center">' + ccRecords[i].courseName + '</td><td class="studClassTable record' +i+'" align="center">' + ccRecords[i].teacherName + '</td><td class="studClassTable record' +i+'" align="center">' + ccRecords[i].stuClass + '</td>'+
+		  '<table class="linkDescList studClassRecord'+i+'"><tbody><tr><td class="studClassTable record' +i+'" align="center"><a href="/guardian/xavier_class.html?teacher=' + ccRecords[i].teacherID +'&studClass=' + ccRecords[i].stuClass +'&ccdcid='+ccRecords[i].ccdcid+'&experience='+ccRecords[i].experience+'&color='+color+'"><img class="hasBorder" src = "/images/'+ ccRecords[i].stuClass + '.jpg" height="200"/><td class="studClassTable record' +i+'" align="center">' + ccRecords[i].courseName + '</td><td class="studClassTable record' +i+'" align="center">' + ccRecords[i].teacherName + '</td><td class="studClassTable record' +i+'" align="center">' + ccRecords[i].stuClass + '</td>'+
 
 		    '<td class="studClassTable record' +i+'" align="center">' + ccRecords[i].experience + ' XP</td></a></td></tr></tbody><table>'
 		   );
 		   
 		   if(ccRecords[i].stuClass == 'Commander'){
 				$j('.studClassRecord'+ i).css({'color': 'white', 'font-family': 'Papyrus', 'border': '3px solid black'});
-				$j('.record'+ i).css('background-color', '#e60000');
+				$j('.record'+ i).css('background-color', '#'+color);
 		   }
 		   
 		   
 		   else if(ccRecords[i].stuClass == 'Scholar'){
 				$j('.studClassRecord'+ i).css({'color': 'white', 'font-family': 'Papyrus', 'border': '3px solid black'});
-				$j('.record'+ i).css('background-color', '#cb3434');
+				$j('.record'+ i).css('background-color', '#'+color);
 		   }
 		   
 		   
 		   else if(ccRecords[i].stuClass == 'Explorer'){
 				$j('.studClassRecord'+ i).css({'color': 'white', 'font-family': 'Papyrus', 'border': '3px solid black'});
-				$j('.record'+ i).css('background-color', '#000099');
+				$j('.record'+ i).css('background-color', '#'+color);
 		   }
 
 		}
