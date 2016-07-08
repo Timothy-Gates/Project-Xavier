@@ -1,19 +1,10 @@
-<?xml version="1.0" encoding="UTF-8" standalone="true"?>
-
--<psExtension xsi:schemaLocation="http://www.powerschool.com psextension.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.powerschool.com">
-
-<extensionname>U_XAVIER_CLASS_DEF</extensionname>
-
-
--<extendedTable comment="Character class definitions for Xavier" childName="U_XAVIER_CLASS_DEF" dbTableName="U_XAVIER_CLASS_DEF" type="standalone">
-
-<field comment="unique identifier for class record" type="integer" length="20" name="id"/>
-<field comment="name of character class" type="varchar" length="20" name="name"/>
-<field comment="string defining xp requirements to level" type="varchar" length="40" name="levels"/>
-<field comment="foriegn key from Teachers table" type="integer" length="20" name="teacherid"/>
-<field comment="image for skill tree" type="varchar" length="20" name="skilltree"/>
-
-
-</extendedTable>
-
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<psExtension xsi:schemaLocation="http://www.powerschool.com psextension.xsd" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://www.powerschool.com">
+	<extensionname>U_XAVIER_CLASS_DEF</extensionname>
+	<extendedTable comment="Character class definitions for Xavier" childName="U_XAVIER_CLASS_DEF" dbTableName="U_XAVIER_CLASS_DEF" type="standalone">
+		<field comment="name of character class" type="string" length="20" name="name"/>
+		<field comment="string defining xp requirements to level" type="string" length="40" name="levels"/>
+		<field comment="foriegn key from Teachers table" type="integer" length="20" name="teacherid"/>
+		<field comment="image for skill tree" type="string" length="20" name="skilltree"/>
+	</extendedTable>
 </psExtension>
