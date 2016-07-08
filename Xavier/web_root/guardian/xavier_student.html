@@ -9,7 +9,7 @@
     <script> 
 	  var ccRecords = [];
 	  function callJSON (){
-	  $j.getJSON('/guardian/tech/xavier/grabStudentCC.json',function(result){ 	  
+	  $j.getJSON('/guardian/tech/xavier/grabStudentCC.json?id=~(curstudid)',function(result){ 	  
 		result.pop();
 		ccRecords = result;
 	  }).done(function(){
@@ -28,7 +28,11 @@
 	
 		  $j('#xavierStudent').append(
 
+<<<<<<< HEAD
 		  '<table class="linkDescList studClassRecord'+i+'"><tbody><tr><td class="studClassTable" align="center"><a href="/guardian/xavier_class.html?teacher=' + ccRecords[i].teacherID +'&studClass=' + ccRecords[i].stuClass +'"><img src = "/images/'+ ccRecords[i].stuClass + '.jpg" height="200"><td class="studClassTable" align="center">' + ccRecords[i].courseName + '</td><td class="studClassTable" align="center">' + ccRecords[i].teacherName + '</td><td class="studClassTable" id="studClassStyle'+i+'" align="center">' + ccRecords[i].stuClass + '</td>'+
+=======
+		  '<table class ="linkDescList"><tbody><tr><td class="studClassTable" align="center"><a href="/guardian/xavier_class.html?teacher=' + ccRecords[i].teacherID +'&studClass=' + ccRecords[i].stuClass +'&ccdcid='+ccRecords[i].ccdcid+'&experience='+ccRecords[i].experience+'"><img src = "/images/'+ ccRecords[i].stuClass + '.jpg" height="200"/><td class="studClassTable" align="center">' + ccRecords[i].courseName + '</td><td class="studClassTable" align="center">' + ccRecords[i].teacherName + '</td><td class="studClassTable" id="studClassStyle'+i+'" align="center">' + ccRecords[i].stuClass + '</td>'+
+>>>>>>> 1ae7553618abed9f8547e81b4d5f09aa155899dc
 		    '<td class="studClassTable" align="center">' + ccRecords[i].experience + '</td></a></td></tr></tbody><table>'
 		   );
 		   
