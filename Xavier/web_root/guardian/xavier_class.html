@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<!-- start right frame -->
+<head>
+    <title>Class Page</title>
+    ~[wc:commonscripts]
+    <link href="/images/css/screen.css" rel="stylesheet" media="screen">
+    <link href="/images/css/print.css" rel="stylesheet" media="print">
+    <script> 
+      var experience = ~[gpv:experience];	
+      var loaded = 0;
+	  var level = 3;
+	  var percent = 68;
+	  var classInfo = {};
+	  var attInfo = {};
+	  var totalXP = 0;
+	  var gearModifier = 1.0;
+	  var classModifier = 1.25;
+	  var dailyXP = 15;
+	  var group = [{name:"Shelly Abrams", studClass:"Explorer", experience: 654}, {name:"James Stewart", studClass:"Scholar", experience: 611}, {name:"Suzy Ramirez", studClass:"Explorer", experience: 1200}, {name:"Steven Page", studClass:"Commander", experience: 888}];
+	  
+	  function GetFormattedDate(date) {
+		    var month = date.getMonth() + Number(1);
+		    var day = date.getDate();
+		    var year = date.getFullYear();
+		    return month + "/" + day + "/" + year;
+		}
+	  function grabAtt(){
+		  var today = new Date();
+		  var now = new Date();
+		  now.setDate(now.getDate() - 7);
+		  today = GetFormattedDate(today);
+		  now = GetFormattedDate(now);
+		  $j.getJSON('/guardian/tech/xavier/grabATT.json?frn=001~(curstudid)&startDate='+ now + '&endDate=' + today,function(result){ 
+			attInfo = result;
+			attInfo.ada=1+(attInfo.ada/10);
+		  }).done(function(){
+			  	readyCheck();
+		  });
+	  }
+	  function grabClassDef(){
+		  $j.getJSON('/guardian/tech/xavier/grabClassDef.json?teacherID=~[gpv:teacher]&class=~[gpv:studClass]' ,function(result){ 
+				classInfo = result;
+		  }).done(function(){
+		  	readyCheck();
+		  });
+	  }
+	  function readyCheck(){
+		  if(loaded == 1){
+			  loadPageInfo();
+		  }
+		  loaded++;
+	  }
+
+	  function loadPageInfo(){
+		  $j('#skillTreeLink').empty();
+		  $j('#skillTreeLink').append(
+				  '<a href="/guardian/skillTree.html?color=~[gpv:color]&tree='+classInfo.skillTree+'">Skills:</a>'
+		  );
+		  var levels = classInfo.levels.split('L');
+		  for(var i = 0; i< levels.length; i++){		  
+			  level = i+1;
+			  if((i+1) == levels.length){
+				  percent = 100;
+				  break;
+			  }
+			  if(experience<levels[i+1]){			  			 
+				  percent = 100*((experience-levels[i])/(levels[i+1]-levels[i]));
+				  break;
+			  }
+		  }
+		  totalXP = (dailyXP*attInfo.ada*classModifier*gearModifier);
+		  $j('#classInfoHeader').empty();
+		  $j('#classInfoHeader').append(
+				  '~[gpv:studClass] Level: '  + level
+	  		);
+		  $j('#groupInfoList').empty();
+		  for(var i = 0; i<group.length; i++){
+			  $j('#groupInfoList').append(
+				'<tr><td align="center" style="vertical-align:middle; font-weight:bold; font-size:24px;"> ' + (i +Number(1)) + 
+				'</td><td style="width:85%"><table class="grid" style="width:80%"><tbody><th>' + group[i].name + '</th>' +
+				'<th>' + group[i].studClass + '</th>' +
+				'<th>' + group[i].experience + '</th>' +
+				'<th><img src = "/images/' + group[i].studClass + '.jpg" height="100"/></th>' +
+				'</tbody></table></td>'
+			  );		  
+		  }
+		  $j('#experienceInfoBar').empty();
+		  $j('#experienceInfoBar').append(
+			'<tr style="height:50px"><td id="grad" style="width:'+ percent + '%;"></td><td id="grad2" style="width:'+ (Number(100)-Number(percent)) + '%;"></td>'  
+		  );
+		  $j('#dailyExperience').empty();
+		  $j('#dailyExperience').append(
+			''+dailyXP+''
+		  );
+		  $j('#attendanceModifier').empty();
+		  $j('#attendanceModifier').append(
+			''+attInfo.ada+'x'
+    	  );
+		  $j('#classModifier').empty();
+		  $j('#classModifier').append(
+			''+classModifier+'x'
+		  );
+		  $j('#gearModifier').empty();
+		  $j('#gearModifier').append(
+			''+gearModifier+'x'
+		  );
+		  $j('#totalExperience').empty();
+		  $j('#totalExperience').append(
+			''+totalXP+''
+		  );
+		  $j('#experienceOwned').empty();
+		  $j('#experienceOwned').append(
+				'Current Experience: '+Math.floor(experience)+''
+		  );
+		  $j('#experienceNeeded').empty();
+		  if(Math.floor(levels[level]-experience)){
+		  	$j('#experienceNeeded').append(
+						'Needed Experience: '+Math.floor(levels[level]-experience)+''
+		  	);
+		  }
+		  else{
+			$j('#experienceNeeded').append(
+						'Needed Experience: Max Level'
+		  	);
+		  }
+		  setBackground();
+	  }
+	  function setBackground(){
+		  $j('#content-main').css({ 'background-color':'#~[gpv:color]', 'background-image':'url("/images/black-felt.png")'});
+		  /*$j('td').each(function(){
+			 $j(this).css({ 'background-color':'#~[gpv:color]', 'background-image':'url("/images/black-felt.png")'});
+		  });*/
+		  console.log("~[gpv:color]");
+	  }
+	  function collectExperience(){
+		  experience += totalXP;
+		  if(experience >= classInfo.levels.split('L')[level]){
+			  $j('#classImage').empty();
+		  	  $j('#classImage').append(	
+			  	'<img src = "/images/~[gpv:studClass]1.jpg"height="800"/>'
+			  );
+		  }
+		  loadPageInfo();
+	  }
+	  
+	  $j(document).ready(function() {	
+	        grabClassDef();
+	        grabAtt();
+	        $j('#experienceButton').click(function(){
+				collectExperience();
+	        });
+	      });
+	</script>
+    <style>
+    table {
+    	box-shadow: 10px 10px 5px #888888;
+    }
+    #ignore{
+    	box-shadow: 0px 0px 0px #888888;
+    }
+    #grad {
+ 		background: yellow; /* For browsers that do not support gradients */
+  		background: -webkit-linear-gradient(yellow, #ffffbf, yellow); /* For Safari 5.1 to 6.0 */
+  		background: -o-linear-gradient(yellow, #ffffbf, yellow); /* For Opera 11.1 to 12.0 */
+  		background: -moz-linear-gradient(yellow, #ffffbf, yellow); /* For Firefox 3.6 to 15 */
+  		background: linear-gradient(yellow, #ffffbf, yellow); /* Standard syntax */
+	}
+	#grad2 {
+ 		background: blue; /* For browsers that do not support gradients */
+  		background: -webkit-linear-gradient(blue, lightBlue, blue); /* For Safari 5.1 to 6.0 */
+  		background: -o-linear-gradient(blue, lightBlue, blue); /* For Opera 11.1 to 12.0 */
+  		background: -moz-linear-gradient(blue, lightBlue, blue); /* For Firefox 3.6 to 15 */
+  		background: linear-gradient(blue, lightBlue, blue); /* Standard syntax */
+	}
+      </style>
+</head>
+<body>
+<form action="list.html" method="POST" id="notification">
+~[wc:admin_header_frame_css]
+~[wc:admin_navigation_frame_css]
+<div id="Error" name=Error" style="border-color: red;"></div>
+<div align="center" style="height:200px"><table style="width:50%;" class="grid"><tbody><tr><td align="center" style="line-height: 200%; font-weight:bold; font-size:84px; font-family:Papyrus; vertical-align:middle;" >The ~[gpv:studClass]</tbody></table></div>
+<table id="ignore"><tbody>
+	<tr>
+		<td style="width:50%">	
+			<div id="classInfo" >
+				<table class="grid"><th style="font-size:24px" colspan="2" id="classInfoHeader"></th><tbody>
+					<tr><td id="classImage" align="center"><img src = "/images/~[gpv:studClass].jpg"height="800"/></td><td style="width:20%">
+						<table class="grid"><th style="font-size:24px" id="skillTreeLink"></th><tbody>
+							<tr><td>Skill 1:<br>~[gpv:studClass] gains extra xp per day (15%)</td></tr>
+							<tr><td>Skill 2:<br>~[gpv:studClass] grants group extra time for copleteing quests (25%)</td></tr>
+							<tr><td>Skill 3:<br>~[gpv:studClass] can use notecard on quizes (3*5)</td></tr>
+							<tr><td>Skill 4:<br>~[gpv:studClass] gets extra points on homework (1)</td></tr>
+						</tbody></table>
+						<table class="grid"><th style="font-size:24px">Traits:</th><tbody>
+							<tr><td>Skillful:<br>~[gpv:studClass] gains extra skill point with every (5) quests</td></tr>
+							<tr><td>Ambitious:<br>~[gpv:studClass] gains access to the advance email group</td></tr>
+							<tr><td>Crafting:<br>Armor boosts are more effective (15%)</td></tr>
+							<tr><td>Cunning:<br>~[gpv:studClass] gains extra xp per day (10%)</td></tr>
+						</tbody></table>
+					</tr></tbody></table>
+			</div>
+		</td>
+		<td style="width:50%">
+			<div id="groupInfo">
+				<table class="grid"><th style="font-size:24px" colspan="2">Questing Group:</th><tbody id="groupInfoList"></tbody></table>
+				<table class="grid"><th style="font-size:24px" colspan="2">Items and Gear:</th><tbody>
+				<tr><td>Piece</td><td>Effect</td></tr>
+				<tr><td>Cloth Vest</td><td>Visually pleasing but not very useful</td></tr>
+				<tr><td>Starter Ring</td><td>Slightly salvageable</td></tr> 
+				<tr><td>Rugged Boots</td><td>Falling apart at the Seams</td></tr> 
+				<tr><td>Small Satchel</td><td>Limits ~[gpv:studClass] to 4 items</td></tr> 
+				</tbody></table>
+			</div>
+		</td>
+	</tr>
+	<tr>
+		<td style="width:50%">
+			<div name="experienceInfo">
+				<table class="grid"><th style="font-size:24px" colspan="2">Experience</th><tbody></tbody>
+					<td align="center" id="experienceOwned"></td><td align="center" id="experienceNeeded"></td>
+				</table>
+				<table class="grid"><tbody id="experienceInfoBar"></tbody></table>	
+				<table class="grid"><th style="font-size:24px" colspan="2">Daily Experience</th><tbody>
+				<tr><td>Daily Experience</td><td id="dailyExperience"></td></tr>
+				<tr><td>Attendance Modifier</td><td id="attendanceModifier"></td></tr>
+				<tr><td>Class Modifier</td><td id="classModifier"></td></tr>
+				<tr><td>Gear Modifier</td><td id="gearModifier"></td></tr>
+				<tr><td>Total Experience</td><td style="font-weight:bold" id="totalExperience"></td></tr>
+				</tbody></table>
+				<table class="linkDescList"><tbody><tr><td style="width:40%"></td><td><input type="button" value="Collect Daily Experience!" id="experienceButton"/>
+				</td></tr></tbody></table>
+			</div>
+		</td>
+		<td style="width:50%">
+			<div name="QuestInfo">
+				<table class="grid"><th style="font-size:24px" colspan="3">Current Quests:</th><tbody>
+					<tr><td>Quest:</td><td>Goals:</td><td>Rewards:</td>
+					<tr><td>1</td><td>Maintain 2 weeks of perfect attendance and perfect homework Submission</td><td>350 Experience Points</td>
+					<tr><td>2</td><td>Report on the California Missions</td><td>200 Experience Points</td>	
+					<tr><td>3</td><td>Run a new Personal Best in the Mile</td><td>150 Experience Points</td>	
+					<tr><td>4</td><td>Solve the Bonus Math Problem</td><td>500 Experience Points</td>						
+				</tbody></table>
+				<table class="grid"><th style="font-size:24px" colspan="3">Current Vision:</th><tbody>
+					<tr><td>Part:</td><td>Goals:</td><td>Rewards:</td>
+					<tr><td>1</td><td>One group member must collect Full Plate Armor</td><td rowspan="3">3500 Experience Points each <br> Group recieves free day off <br> Group does not have to take the final</td>
+					<tr><td>2</td><td>Group must complete 12 quests</td>
+					<tr><td>3</td><td>Group must all reach Lvl 4</td>					
+				</tbody></table>
+			</div>
+		</td>
+	</tr>
+</tbody></table>
+<!-- end of content of bounding box -->
+~[wc:admin_footer_frame_css]
+</form>
+</body>
+</html>
+
+
+
